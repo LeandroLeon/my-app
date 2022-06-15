@@ -14,6 +14,7 @@ export const NewEventModal = (props: NewEventModalProps) => {
     startTime: "",
     endTime: "",
   };
+
   const [show, setShow] = useState(false);
   const [inputs, setInputs] = useState(INITIAL_INPUT_VALUES);
 

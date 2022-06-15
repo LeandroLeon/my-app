@@ -32,6 +32,16 @@ export const MyCalendar = () => {
       start,
       end,
     },
+    {
+      title: "Reservado por FVega2",
+      start,
+      end,
+    },
+    {
+      title: "Reservado por FVega3",
+      start,
+      end,
+    },
   ]);
 
   const onEventResize: withDragAndDropProps["onEventResize"] = (data) => {
@@ -49,11 +59,21 @@ export const MyCalendar = () => {
   };
 
   const onSelectEvent = (event: Event) => {
-    console.log(event.title);
+    console.log(event);
+    const confirmation = window.confirm(
+      "Would you like to remove this event?" + event.title
+    );
+    if (confirmation) deleteEvent(event);
   };
 
   const onSelectSlot = (slotInfo: SlotInfo) => {
     console.log(slotInfo);
+  };
+
+  const deleteEvent = (eventToDelete: Event) => {
+    setEvents((currentEvents) => {
+      return currentEvents.filter((event) => event != eventToDelete);
+    });
   };
 
   return (
