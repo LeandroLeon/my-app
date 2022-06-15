@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { Calendar, dateFnsLocalizer, Event } from "react-big-calendar";
+import {
+  Calendar,
+  dateFnsLocalizer,
+  Event,
+  SlotInfo,
+} from "react-big-calendar";
 import withDragAndDrop, {
   withDragAndDropProps,
 } from "react-big-calendar/lib/addons/dragAndDrop";
@@ -12,8 +17,15 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import addHours from "date-fns/addHours";
 import startOfHour from "date-fns/startOfHour";
+import { Container } from "react-bootstrap";
+import { NewEventModal } from "./NewEventModal";
 
 export const MyCalendar = () => {
+  const endOfHour = (date: Date): Date => addHours(startOfHour(date), 1);
+  const now = new Date();
+  const start = endOfHour(now);
+  const end = addHours(start, 2);
+
   const [events, setEvents] = useState<Event[]>([
     {
       title: "Reservado por FVega",
@@ -24,64 +36,55 @@ export const MyCalendar = () => {
 
   const onEventResize: withDragAndDropProps["onEventResize"] = (data) => {
     const { start, end } = data;
-
+    data.event.start = start as Date;
+    data.event.end = end as Date;
     setEvents((currentEvents) => {
-      const firstEvent = {
-        start: new Date(start),
-        end: new Date(end),
-      };
-      return [...currentEvents, firstEvent];
+      return [...currentEvents];
     });
   };
 
   const onEventDrop: withDragAndDropProps["onEventDrop"] = (data) => {
     data.event.start = data.start as Date;
     data.event.end = data.end as Date;
-    console.log(data);
   };
 
   const onSelectEvent = (event: Event) => {
     console.log(event.title);
   };
 
-  const onKeyPressEvent = (
-    event: Event,
-    keyPressEvent: React.SyntheticEvent<HTMLInputElement>
-  ) => {
-    if (
-      keyPressEvent instanceof KeyboardEvent &&
-      (keyPressEvent.key === "Backspace" || keyPressEvent.key === "Backspace")
-    ) {
-      console.log("Key pressed");
-    }
+  const onSelectSlot = (slotInfo: SlotInfo) => {
+    console.log(slotInfo);
   };
 
   return (
-    <DnDCalendar
-      defaultView="week"
-      events={events}
-      localizer={localizer}
-      onEventDrop={onEventDrop}
-      onEventResize={onEventResize}
-      onSelectEvent={onSelectEvent}
-      resizable
-      style={{ height: "85vh" }}
-    />
+    <Container>
+      <DnDCalendar
+        defaultView="week"
+        events={events}
+        localizer={localizer}
+        onEventDrop={onEventDrop}
+        onEventResize={onEventResize}
+        onSelectEvent={onSelectEvent}
+        onSelectSlot={onSelectSlot}
+        min={new Date(0, 0, 0, 7, 0)} // 7.00 AM
+        max={new Date(0, 0, 0, 19, 0)} // 7.00 PM
+        style={{ height: "85vh" }}
+        resizable
+        selectable
+      />
+      <NewEventModal events={events} setEvents={setEvents} />
+    </Container>
   );
 };
-
-const endOfHour = (date: Date): Date => addHours(startOfHour(date), 1);
-const now = new Date();
-const start = endOfHour(now);
-const end = addHours(start, 2);
 
 const DnDCalendar = withDragAndDrop(Calendar);
 
 const locales = { es: es };
+const sOfWeek = () => startOfWeek(new Date(), { weekStartsOn: 1 });
 const localizer = dateFnsLocalizer({
   format,
   parse,
-  startOfWeek,
+  startOfWeek: sOfWeek,
   getDay,
   locales,
 });
