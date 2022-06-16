@@ -72,7 +72,7 @@ export const MyCalendar = () => {
 
   const deleteEvent = (eventToDelete: Event) => {
     setEvents((currentEvents) => {
-      return currentEvents.filter((event) => event != eventToDelete);
+      return currentEvents.filter((event) => event !== eventToDelete);
     });
   };
 
