@@ -9,6 +9,7 @@ import { MyCalendar } from "./components/Calendar";
 import { Header } from "./components/Header";
 import { withAuthenticator, Button, Heading } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import Todo from "./components/Todo";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/users" element={<Users />} />
         <Route path="/about" element={<About />} />
+        <Route path="/todo" element={<Todo />} />
       </Routes>
     </Router>
   );

@@ -20,6 +20,9 @@ import startOfHour from "date-fns/startOfHour";
 import { Container } from "react-bootstrap";
 import { NewEventModal } from "./NewEventModal";
 
+import GraphQLAPI, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql";
+import { listTodos, Todo } from "../graphql";
+
 export const MyCalendar = () => {
   const endOfHour = (date: Date): Date => addHours(startOfHour(date), 1);
   const now = new Date();
