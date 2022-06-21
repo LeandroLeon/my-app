@@ -1,10 +1,14 @@
 import { ChangeEvent, SetStateAction, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Event } from "react-big-calendar";
+import { CreateEventMutation, ListEventsQuery } from "../API";
+import { API } from "aws-amplify";
+import { createEvent } from "../graphql";
+import { IdentifiedEvent } from "./IdentifiedEvent";
 
 interface NewEventModalProps {
-  events: Event[];
-  setEvents: React.Dispatch<SetStateAction<Event[]>>;
+  events: ListEventsQuery | undefined;
+  setEvents: React.Dispatch<SetStateAction<ListEventsQuery | undefined>>;
 }
 
 export const NewEventModal = (props: NewEventModalProps) => {
@@ -31,16 +35,30 @@ export const NewEventModal = (props: NewEventModalProps) => {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!areValidInputs()) return;
+    const eventDetails = getInputs();
+
+    const createEventMutationData = (await API.graphql({
+      query: createEvent,
+      variables: { input: eventDetails },
+    })) as { data: CreateEventMutation; errors: any[] };
+    const newEvent = createEventMutationData.data;
     props.setEvents((currentEvents) => {
-      const newEvent = {
-        title: `Reservado por ${inputs.email}`,
-        start: new Date(inputs.eventDate + "T" + inputs.startTime),
-        end: new Date(inputs.eventDate + "T" + inputs.endTime),
-      };
-      return [...currentEvents, newEvent];
+      const newEvents = Object.assign({}, currentEvents);
+      const items = newEvents?.listEvents?.items;
+      if (
+        newEvents?.listEvents?.items !== undefined &&
+        items !== undefined &&
+        newEvent.createEvent
+      ) {
+        newEvents.listEvents.items.push({ ...newEvent.createEvent });
+        return newEvents;
+      } else {
+        return undefined;
+      }
     });
+
     setShow(false);
   };
 
@@ -52,6 +70,14 @@ export const NewEventModal = (props: NewEventModalProps) => {
       }
     }
     return true;
+  };
+
+  const getInputs = () => {
+    return {
+      title: `Reservado por ${inputs.email}`,
+      startDate: new Date(inputs.eventDate + "T" + inputs.startTime),
+      endDate: new Date(inputs.eventDate + "T" + inputs.endTime),
+    };
   };
 
   return (

@@ -2,18 +2,22 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateTodoInput = {
+export type CreateEventInput = {
   id?: string | null,
-  name: string,
+  title: string,
   description?: string | null,
+  startDate: string,
+  endDate: string,
 };
 
-export type ModelTodoConditionInput = {
-  name?: ModelStringInput | null,
+export type ModelEventConditionInput = {
+  title?: ModelStringInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelTodoConditionInput | null > | null,
-  or?: Array< ModelTodoConditionInput | null > | null,
-  not?: ModelTodoConditionInput | null,
+  startDate?: ModelStringInput | null,
+  endDate?: ModelStringInput | null,
+  and?: Array< ModelEventConditionInput | null > | null,
+  or?: Array< ModelEventConditionInput | null > | null,
+  not?: ModelEventConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -56,32 +60,38 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Todo = {
-  __typename: "Todo",
+export type Event = {
+  __typename: "Event",
   id: string,
-  name: string,
+  title: string,
   description?: string | null,
+  startDate: string,
+  endDate: string,
   createdAt: string,
   updatedAt: string,
 };
 
-export type UpdateTodoInput = {
+export type UpdateEventInput = {
   id: string,
-  name?: string | null,
+  title?: string | null,
   description?: string | null,
+  startDate?: string | null,
+  endDate?: string | null,
 };
 
-export type DeleteTodoInput = {
+export type DeleteEventInput = {
   id: string,
 };
 
-export type ModelTodoFilterInput = {
+export type ModelEventFilterInput = {
   id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
+  title?: ModelStringInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelTodoFilterInput | null > | null,
-  or?: Array< ModelTodoFilterInput | null > | null,
-  not?: ModelTodoFilterInput | null,
+  startDate?: ModelStringInput | null,
+  endDate?: ModelStringInput | null,
+  and?: Array< ModelEventFilterInput | null > | null,
+  or?: Array< ModelEventFilterInput | null > | null,
+  not?: ModelEventFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -100,89 +110,99 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type ModelTodoConnection = {
-  __typename: "ModelTodoConnection",
-  items:  Array<Todo | null >,
+export type ModelEventConnection = {
+  __typename: "ModelEventConnection",
+  items:  Array<Event | null >,
   nextToken?: string | null,
 };
 
-export type CreateTodoMutationVariables = {
-  input: CreateTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type CreateEventMutationVariables = {
+  input: CreateEventInput,
+  condition?: ModelEventConditionInput | null,
 };
 
-export type CreateTodoMutation = {
-  createTodo?:  {
-    __typename: "Todo",
+export type CreateEventMutation = {
+  createEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateTodoMutationVariables = {
-  input: UpdateTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type UpdateEventMutationVariables = {
+  input: UpdateEventInput,
+  condition?: ModelEventConditionInput | null,
 };
 
-export type UpdateTodoMutation = {
-  updateTodo?:  {
-    __typename: "Todo",
+export type UpdateEventMutation = {
+  updateEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteTodoMutationVariables = {
-  input: DeleteTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type DeleteEventMutationVariables = {
+  input: DeleteEventInput,
+  condition?: ModelEventConditionInput | null,
 };
 
-export type DeleteTodoMutation = {
-  deleteTodo?:  {
-    __typename: "Todo",
+export type DeleteEventMutation = {
+  deleteEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type GetTodoQueryVariables = {
+export type GetEventQueryVariables = {
   id: string,
 };
 
-export type GetTodoQuery = {
-  getTodo?:  {
-    __typename: "Todo",
+export type GetEventQuery = {
+  getEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListTodosQueryVariables = {
-  filter?: ModelTodoFilterInput | null,
+export type ListEventsQueryVariables = {
+  filter?: ModelEventFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListTodosQuery = {
-  listTodos?:  {
-    __typename: "ModelTodoConnection",
+export type ListEventsQuery = {
+  listEvents?:  {
+    __typename: "ModelEventConnection",
     items:  Array< {
-      __typename: "Todo",
+      __typename: "Event",
       id: string,
-      name: string,
+      title: string,
       description?: string | null,
+      startDate: string,
+      endDate: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -190,34 +210,40 @@ export type ListTodosQuery = {
   } | null,
 };
 
-export type OnCreateTodoSubscription = {
-  onCreateTodo?:  {
-    __typename: "Todo",
+export type OnCreateEventSubscription = {
+  onCreateEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateTodoSubscription = {
-  onUpdateTodo?:  {
-    __typename: "Todo",
+export type OnUpdateEventSubscription = {
+  onUpdateEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteTodoSubscription = {
-  onDeleteTodo?:  {
-    __typename: "Todo",
+export type OnDeleteEventSubscription = {
+  onDeleteEvent?:  {
+    __typename: "Event",
     id: string,
-    name: string,
+    title: string,
     description?: string | null,
+    startDate: string,
+    endDate: string,
     createdAt: string,
     updatedAt: string,
   } | null,

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Calendar,
   dateFnsLocalizer,
   Event,
   SlotInfo,
+  stringOrDate,
 } from "react-big-calendar";
 import withDragAndDrop, {
   withDragAndDropProps,
@@ -15,80 +16,146 @@ import getDay from "date-fns/getDay";
 import es from "date-fns/locale/es";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import addHours from "date-fns/addHours";
-import startOfHour from "date-fns/startOfHour";
 import { Container } from "react-bootstrap";
 import { NewEventModal } from "./NewEventModal";
-
+import { DeleteEventInput, listEvents, ListEventsQuery } from "../graphql";
+import * as MUTATIONS from "../graphql/mutations";
 import GraphQLAPI, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql";
-import { listTodos, Todo } from "../graphql";
+import { API } from "aws-amplify";
+import { IdentifiedEvent } from "./IdentifiedEvent";
+
+type DragAndDropEventData = {
+  event: Event;
+  start: stringOrDate;
+  end: stringOrDate;
+  isAllDay: boolean;
+};
+
+const adaptEventsFromAPI = (data: ListEventsQuery) => {
+  if (data !== undefined) {
+    const adaptedEvents: IdentifiedEvent[] = [];
+    if (data.listEvents?.items !== undefined) {
+      for (const event of data.listEvents?.items) {
+        adaptedEvents.push({
+          title: event?.title,
+          start: new Date(event?.startDate as string),
+          end: new Date(event?.endDate as string),
+          id: event?.id as string,
+        });
+      }
+    }
+    return adaptedEvents;
+  }
+};
 
 export const MyCalendar = () => {
-  const endOfHour = (date: Date): Date => addHours(startOfHour(date), 1);
-  const now = new Date();
-  const start = endOfHour(now);
-  const end = addHours(start, 2);
+  const [events, setEvents] = useState<ListEventsQuery | undefined>(undefined);
 
-  const [events, setEvents] = useState<Event[]>([
-    {
-      title: "Reservado por FVega",
-      start,
-      end,
-    },
-    {
-      title: "Reservado por FVega2",
-      start,
-      end,
-    },
-    {
-      title: "Reservado por FVega3",
-      start,
-      end,
-    },
-  ]);
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = (await GraphQLAPI.graphql({
+          query: listEvents,
+          authMode: GRAPHQL_AUTH_MODE.API_KEY,
+        })) as { data: ListEventsQuery };
+        setEvents(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchEvents();
+  }, []);
 
-  const onEventResize: withDragAndDropProps["onEventResize"] = (data) => {
-    const { start, end } = data;
-    data.event.start = start as Date;
-    data.event.end = end as Date;
-    setEvents((currentEvents) => {
-      return [...currentEvents];
+  const updateEventFromAPI = async (eventDetails: IdentifiedEvent) =>
+    await API.graphql({
+      query: MUTATIONS.updateEvent,
+      variables: { input: eventDetails },
+    });
+
+  const deleteEventFromAPI = async (eventId: DeleteEventInput) => {
+    await API.graphql({
+      query: MUTATIONS.deleteEvent,
+      variables: { input: eventId },
     });
   };
 
-  const onEventDrop: withDragAndDropProps["onEventDrop"] = (data) => {
-    data.event.start = data.start as Date;
-    data.event.end = data.end as Date;
+  const updateEvent = (data: DragAndDropEventData) => {
+    const identifiedEvent = data.event as IdentifiedEvent;
+    const eventDetails = {
+      id: identifiedEvent.id,
+      startDate: data.start,
+      endDate: data.end,
+    };
+    try {
+      updateEventFromAPI(eventDetails);
+      setEvents((currentEvents) => {
+        const newEvents = Object.assign({}, currentEvents);
+        // eslint-disable-next-line
+        newEvents?.listEvents?.items.filter((item) => {
+          if (item?.id === identifiedEvent.id) {
+            item.startDate = data.start.toString();
+            item.endDate = data.end.toString();
+          }
+        });
+        return newEvents;
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const onSelectEvent = (event: Event) => {
-    console.log(event);
-    const confirmation = window.confirm(
-      "Would you like to remove this event?" + event.title
-    );
-    if (confirmation) deleteEvent(event);
+  const onEventDrop: withDragAndDropProps["onEventDrop"] = (
+    data: DragAndDropEventData
+  ) => {
+    updateEvent(data);
   };
 
   const onSelectSlot = (slotInfo: SlotInfo) => {
     console.log(slotInfo);
   };
 
-  const deleteEvent = (eventToDelete: Event) => {
-    setEvents((currentEvents) => {
-      return currentEvents.filter((event) => event !== eventToDelete);
-    });
+  const onSelectEvent = (event: Event) => {
+    const identifiedEvent = event as IdentifiedEvent;
+    const confirmation = window.confirm(
+      "Would you like to remove this event?" + event.title
+    );
+    if (confirmation) removeEvent(identifiedEvent);
+    return;
+  };
+
+  const onEventResize: withDragAndDropProps["onEventResize"] = (
+    data: DragAndDropEventData
+  ) => {
+    updateEvent(data);
+  };
+
+  const removeEvent = (eventToDelete: IdentifiedEvent) => {
+    try {
+      deleteEventFromAPI({ id: eventToDelete.id });
+      setEvents((currentEvents) => {
+        const newEvents = Object.assign({}, currentEvents);
+        const items = newEvents?.listEvents?.items.filter(
+          (item) => item?.id !== eventToDelete.id
+        );
+        if (newEvents?.listEvents?.items !== undefined && items !== undefined)
+          newEvents.listEvents.items = items;
+        return newEvents;
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <Container>
       <DnDCalendar
         defaultView="week"
-        events={events}
+        events={adaptEventsFromAPI(events as ListEventsQuery)}
         localizer={localizer}
         onEventDrop={onEventDrop}
-        onEventResize={onEventResize}
-        onSelectEvent={onSelectEvent}
         onSelectSlot={onSelectSlot}
+        onSelectEvent={onSelectEvent}
+        onEventResize={onEventResize}
         min={new Date(0, 0, 0, 7, 0)} // 7.00 AM
         max={new Date(0, 0, 0, 19, 0)} // 7.00 PM
         style={{ height: "85vh" }}
