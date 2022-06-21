@@ -3,8 +3,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateEvent = /* GraphQL */ `
-  subscription OnCreateEvent {
-    onCreateEvent {
+  subscription OnCreateEvent($owner: String) {
+    onCreateEvent(owner: $owner) {
       id
       title
       description
@@ -12,12 +12,13 @@ export const onCreateEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onUpdateEvent = /* GraphQL */ `
-  subscription OnUpdateEvent {
-    onUpdateEvent {
+  subscription OnUpdateEvent($owner: String) {
+    onUpdateEvent(owner: $owner) {
       id
       title
       description
@@ -25,12 +26,13 @@ export const onUpdateEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
 export const onDeleteEvent = /* GraphQL */ `
-  subscription OnDeleteEvent {
-    onDeleteEvent {
+  subscription OnDeleteEvent($owner: String) {
+    onDeleteEvent(owner: $owner) {
       id
       title
       description
@@ -38,6 +40,7 @@ export const onDeleteEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;

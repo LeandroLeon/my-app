@@ -32,7 +32,15 @@
     "myapp": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "myapp7a68b9f7",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ],
       "output": {
         "authConfig": {
           "defaultAuthentication": {
@@ -41,7 +49,14 @@
               "apiKeyExpirationDays": 7
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authmyapp7a68b9f7"
+              }
+            }
+          ]
         }
       }
     }

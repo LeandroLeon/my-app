@@ -15,6 +15,7 @@ export const createEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -31,6 +32,7 @@ export const updateEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -47,6 +49,7 @@ export const deleteEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;

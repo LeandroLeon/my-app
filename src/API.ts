@@ -69,6 +69,7 @@ export type Event = {
   endDate: string,
   createdAt: string,
   updatedAt: string,
+  owner?: string | null,
 };
 
 export type UpdateEventInput = {
@@ -131,6 +132,7 @@ export type CreateEventMutation = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -149,6 +151,7 @@ export type UpdateEventMutation = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -167,6 +170,7 @@ export type DeleteEventMutation = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -184,6 +188,7 @@ export type GetEventQuery = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -205,9 +210,14 @@ export type ListEventsQuery = {
       endDate: string,
       createdAt: string,
       updatedAt: string,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
+};
+
+export type OnCreateEventSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnCreateEventSubscription = {
@@ -220,7 +230,12 @@ export type OnCreateEventSubscription = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
+};
+
+export type OnUpdateEventSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateEventSubscription = {
@@ -233,7 +248,12 @@ export type OnUpdateEventSubscription = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
+};
+
+export type OnDeleteEventSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnDeleteEventSubscription = {
@@ -246,5 +266,6 @@ export type OnDeleteEventSubscription = {
     endDate: string,
     createdAt: string,
     updatedAt: string,
+    owner?: string | null,
   } | null,
 };

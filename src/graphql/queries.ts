@@ -12,6 +12,7 @@ export const getEvent = /* GraphQL */ `
       endDate
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -30,6 +31,7 @@ export const listEvents = /* GraphQL */ `
         endDate
         createdAt
         updatedAt
+        owner
       }
       nextToken
     }
