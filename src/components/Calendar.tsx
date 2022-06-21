@@ -79,7 +79,7 @@ export const MyCalendar = () => {
     });
   };
 
-  const updateEvent = (data: DragAndDropEventData) => {
+  const updateEvent = async (data: DragAndDropEventData) => {
     const identifiedEvent = data.event as IdentifiedEvent;
     const eventDetails = {
       id: identifiedEvent.id,
@@ -87,7 +87,10 @@ export const MyCalendar = () => {
       endDate: data.end,
     };
     try {
-      updateEventFromAPI(eventDetails);
+      (await updateEventFromAPI(eventDetails)) as {
+        data: ListEventsQuery;
+        errors: Array<{}>;
+      };
       setEvents((currentEvents) => {
         const newEvents = Object.assign({}, currentEvents);
         // eslint-disable-next-line
@@ -100,7 +103,8 @@ export const MyCalendar = () => {
         return newEvents;
       });
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) alert(error.message);
+      if (error instanceof Array && error.length > 0) alert(error[0].message);
     }
   };
 
@@ -129,9 +133,9 @@ export const MyCalendar = () => {
     updateEvent(data);
   };
 
-  const removeEvent = (eventToDelete: IdentifiedEvent) => {
+  const removeEvent = async (eventToDelete: IdentifiedEvent) => {
     try {
-      deleteEventFromAPI({ id: eventToDelete.id });
+      await deleteEventFromAPI({ id: eventToDelete.id });
       setEvents((currentEvents) => {
         const newEvents = Object.assign({}, currentEvents);
         const items = newEvents?.listEvents?.items.filter(

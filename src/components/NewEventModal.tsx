@@ -1,10 +1,8 @@
 import { ChangeEvent, SetStateAction, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { Event } from "react-big-calendar";
 import { CreateEventMutation, ListEventsQuery } from "../API";
 import { API } from "aws-amplify";
 import { createEvent } from "../graphql";
-import { IdentifiedEvent } from "./IdentifiedEvent";
 
 interface NewEventModalProps {
   events: ListEventsQuery | undefined;
@@ -65,7 +63,7 @@ export const NewEventModal = (props: NewEventModalProps) => {
   const areValidInputs = () => {
     for (const key of Object.keys(inputs) as (keyof typeof inputs)[]) {
       if (inputs[key] === "") {
-        alert("Todos los campos deben estar rellanados");
+        alert("Todos los campos deben estar rellenados");
         return false;
       }
     }
@@ -74,7 +72,7 @@ export const NewEventModal = (props: NewEventModalProps) => {
 
   const getInputs = () => {
     return {
-      title: `Reservado por ${inputs.email}`,
+      title: `Reservado por: ${inputs.email}`,
       startDate: new Date(inputs.eventDate + "T" + inputs.startTime),
       endDate: new Date(inputs.eventDate + "T" + inputs.endTime),
     };
@@ -93,11 +91,11 @@ export const NewEventModal = (props: NewEventModalProps) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Titulo</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
-                placeholder="name@example.com"
+                placeholder="example@aytoagaete.es"
                 autoFocus
                 onChange={handleChange}
               />
