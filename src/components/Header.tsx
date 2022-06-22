@@ -1,8 +1,9 @@
 import { Auth } from "aws-amplify";
 import { SetStateAction, useEffect, useState } from "react";
-import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Link, NavLink } from "react-router-dom";
 import logo from "./../logo.svg";
+import style from "../styles/Header.module.css";
 
 export const Header = () => {
   const [error, setError] = useState(null);
@@ -60,9 +61,30 @@ export const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Item className={"m-auto"}>
-              <Link to="/home">Home</Link>
-              <Link to="/users">Users</Link>
-              <Link to="/about">About</Link>
+              <NavLink
+                className={(navData: any) =>
+                  navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
+                }
+                to="/home"
+              >
+                Home
+              </NavLink>
+              <NavLink
+                className={(navData: any) =>
+                  navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
+                }
+                to="/users"
+              >
+                Users
+              </NavLink>
+              <NavLink
+                className={(navData: any) =>
+                  navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
+                }
+                to="/about"
+              >
+                About
+              </NavLink>
             </Nav.Item>
           </Nav>
           <Nav className={"ms-auto"}>

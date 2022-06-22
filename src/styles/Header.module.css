@@ -1,0 +1,12 @@
+.Link {
+  padding: 2%;
+  color: white;
+  text-decoration: underline;
+}
+
+.ActiveLink {
+  padding: 2%;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+}

@@ -116,7 +116,7 @@ export const NewEventModal = (props: NewEventModalProps) => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Titulo</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
                 name="email"
