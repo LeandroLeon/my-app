@@ -151,7 +151,7 @@ export const MyCalendar = () => {
   };
 
   return (
-    <Container>
+    <Container className={"mt-3"}>
       <DnDCalendar
         defaultView="week"
         events={adaptEventsFromAPI(events as ListEventsQuery)}
