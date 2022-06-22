@@ -46,7 +46,7 @@ export const Header = () => {
   return (
     <Navbar bg="dark" variant="dark" className="container-fluid">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
           <img
             src={logo}
             width="30"
@@ -64,19 +64,6 @@ export const Header = () => {
               <Link to="/users">Users</Link>
               <Link to="/about">About</Link>
             </Nav.Item>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item>
-                <Link to="/action/3.1">Action</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                <Link to="/action/3.2">Another Action</Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link to="separated-link">Separated link</Link>
-              </NavDropdown.Item>
-            </NavDropdown>
           </Nav>
           <Nav className={"ms-auto"}>
             <Nav.Item>
