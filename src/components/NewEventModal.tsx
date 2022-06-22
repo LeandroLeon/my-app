@@ -1,7 +1,7 @@
-import { ChangeEvent, SetStateAction, useState } from "react";
+import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { CreateEventMutation, ListEventsQuery } from "../API";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import { createEvent } from "../graphql";
 
 interface NewEventModalProps {
@@ -19,6 +19,31 @@ export const NewEventModal = (props: NewEventModalProps) => {
 
   const [show, setShow] = useState(false);
   const [inputs, setInputs] = useState(INITIAL_INPUT_VALUES);
+
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+  });
+
+  useEffect(() => {
+    try {
+      Auth.currentAuthenticatedUser({
+        bypassCache: false,
+      })
+        .then((user) => {
+          setUser({
+            username: user.attributes.name,
+            email: user.attributes.email,
+          });
+          setInputs((currentInputs) => {
+            return { ...currentInputs, email: user.attributes.email };
+          });
+        })
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handleHide = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -96,6 +121,7 @@ export const NewEventModal = (props: NewEventModalProps) => {
                 type="email"
                 name="email"
                 placeholder="example@aytoagaete.es"
+                defaultValue={user.email}
                 autoFocus
                 onChange={handleChange}
               />
