@@ -156,6 +156,8 @@ export const MyCalendar = () => {
         defaultView="week"
         events={adaptEventsFromAPI(events as ListEventsQuery)}
         localizer={localizer}
+        culture={"es"}
+        messages={messages}
         onEventDrop={onEventDrop}
         onSelectSlot={onSelectSlot}
         onSelectEvent={onSelectEvent}
@@ -163,6 +165,7 @@ export const MyCalendar = () => {
         min={new Date(0, 0, 0, 7, 0)} // 7.00 AM
         max={new Date(0, 0, 0, 19, 0)} // 7.00 PM
         style={{ height: "85vh" }}
+        dayLayoutAlgorithm={"no-overlap"}
         resizable
         selectable
       />
@@ -182,3 +185,24 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales,
 });
+
+const messages = {
+  date: "Fecha",
+  time: "Hora",
+  event: "Evento",
+  allDay: "Todo el día",
+  week: "Semana",
+  work_week: "Semana Laboral",
+  day: "Dia",
+  month: "Mes",
+  previous: "Atrás",
+  next: "Siguiente",
+  yesterday: "Ayer",
+  tomorrow: "Mañana",
+  today: "Hoy",
+  agenda: "Agenda",
+  noEventsInRange: "No hay eventos en este rango.",
+  showMore: function showMore(total: number) {
+    return "+" + total + " Mas";
+  },
+};
