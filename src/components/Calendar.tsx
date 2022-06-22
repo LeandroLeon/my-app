@@ -22,7 +22,7 @@ import { DeleteEventInput, listEvents, ListEventsQuery } from "../graphql";
 import * as MUTATIONS from "../graphql/mutations";
 import GraphQLAPI, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql";
 import { API } from "aws-amplify";
-import { IdentifiedEvent } from "./IdentifiedEvent";
+import { IdentifiedEvent } from "../types/IdentifiedEvent";
 
 type DragAndDropEventData = {
   event: Event;
@@ -121,7 +121,7 @@ export const MyCalendar = () => {
   const onSelectEvent = (event: Event) => {
     const identifiedEvent = event as IdentifiedEvent;
     const confirmation = window.confirm(
-      "Would you like to remove this event?" + event.title
+      "Quiere eliminar el evento:  " + event.title + " ?"
     );
     if (confirmation) removeEvent(identifiedEvent);
     return;
