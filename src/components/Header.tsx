@@ -73,9 +73,9 @@ export const Header = () => {
                 className={(navData: any) =>
                   navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
                 }
-                to="/users"
+                to="/enlaces"
               >
-                Users
+                Enlaces
               </NavLink>
               <NavLink
                 className={(navData: any) =>
