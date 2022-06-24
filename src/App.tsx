@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { MyCalendar } from "./components/Calendar";
 import { Header } from "./components/Header";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import { Home } from "./pages/Home";
 
 const App = () => {
   return (
@@ -17,10 +17,6 @@ const App = () => {
     </Router>
   );
 };
-
-function Home() {
-  return <MyCalendar />;
-}
 
 function About() {
   return <h2>About</h2>;

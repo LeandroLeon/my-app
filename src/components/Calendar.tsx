@@ -31,6 +31,10 @@ type DragAndDropEventData = {
   isAllDay: boolean;
 };
 
+interface CustomCalendarProps {
+  title: string;
+}
+
 const adaptEventsFromAPI = (data: ListEventsQuery) => {
   if (data !== undefined) {
     const adaptedEvents: IdentifiedEvent[] = [];
@@ -48,7 +52,7 @@ const adaptEventsFromAPI = (data: ListEventsQuery) => {
   }
 };
 
-export const MyCalendar = () => {
+export const CustomCalendar = (props: CustomCalendarProps) => {
   const [events, setEvents] = useState<ListEventsQuery | undefined>(undefined);
 
   useEffect(() => {
@@ -152,6 +156,7 @@ export const MyCalendar = () => {
 
   return (
     <Container className={"mt-3"}>
+      <h2>{props.title}</h2>
       <DnDCalendar
         defaultView="week"
         events={adaptEventsFromAPI(events as ListEventsQuery)}
