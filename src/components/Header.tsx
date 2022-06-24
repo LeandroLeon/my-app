@@ -1,5 +1,5 @@
 import { Auth } from "aws-amplify";
-import { SetStateAction, useEffect, useState } from "react";
+import { SetStateAction, useEffect, useInsertionEffect, useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import logo from "./../logo.svg";
@@ -13,6 +13,15 @@ export const Header = () => {
     email: "",
   });
 
+  useEffect(() => {
+    setUser(() => {
+      return {
+        username: window.sessionStorage.getItem("username") as string,
+        email: window.sessionStorage.getItem("email") as string,
+      };
+    });
+  }, []);
+
   const signOut = () => {
     Auth.signOut()
       .then((data) => {
@@ -21,28 +30,6 @@ export const Header = () => {
       })
       .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    try {
-      setError(null);
-      setLoading(true);
-
-      Auth.currentAuthenticatedUser({
-        bypassCache: false,
-      })
-        .then((user) => {
-          setUser({
-            username: user.attributes.name,
-            email: user.attributes.email,
-          });
-        })
-        .catch((err) => setError(err));
-    } catch (error: SetStateAction<any>) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
   return (
     <Navbar bg="dark" variant="dark" className="container-fluid">
@@ -73,17 +60,9 @@ export const Header = () => {
                 className={(navData: any) =>
                   navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
                 }
-                to="/enlaces"
+                to="/reservas"
               >
-                Enlaces
-              </NavLink>
-              <NavLink
-                className={(navData: any) =>
-                  navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
-                }
-                to="/about"
-              >
-                About
+                Reservas
               </NavLink>
             </Nav.Item>
           </Nav>

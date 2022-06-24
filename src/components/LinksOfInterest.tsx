@@ -1,17 +1,18 @@
-import { Card, Container, Nav } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Container, Card, Nav } from "react-bootstrap";
 import logoGestiona from "../logos/logo_espublico_gestiona.png";
 import logoNominalia from "../logos/logo_nominalia.png";
 import logoPortalHorario from "../logos/logo_portal_horario.png";
 import logoAgaete from "../logos/logo_agaete.png";
 
-type LinkOfInterest = {
+type LinksOfInterestData = {
   name: string;
   description?: string | undefined;
   url: string;
   logo?: string;
 };
 
-const LINKS_OF_INTEREST: LinkOfInterest[] = [
+const LINKS_OF_INTEREST: LinksOfInterestData[] = [
   {
     name: "Gestiona",
     description:
@@ -42,36 +43,37 @@ const LINKS_OF_INTEREST: LinkOfInterest[] = [
 
 export const LinksOfInterest = () => {
   return (
-    <Container style={style.MainContainer}>
-      {LINKS_OF_INTEREST.map((link) => {
-        return (
-          <Card
-            style={{
-              width: "18rem",
-              margin: "1rem",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <Card.Body>
-              {link.logo != undefined ? (
-                <Card.Img variant="top" src={link.logo} />
-              ) : (
-                <Card.Title>{link.name}</Card.Title>
-              )}
-              <Card.Text className="p-3 mb-0">{link.description}</Card.Text>
-              <Nav.Link
-                href={link.url}
-                target={"_blank"}
-                style={{ marginTop: "auto" }}
-              >
-                Ir a {link.name}
-              </Nav.Link>
-            </Card.Body>
-          </Card>
-        );
-      })}
-    </Container>
+    <>
+      <Container style={style.MainContainer}>
+        {LINKS_OF_INTEREST.map((link) => {
+          return (
+            <Card
+              bg={"Light".toLowerCase()}
+              style={{
+                width: "18rem",
+                margin: "1rem",
+              }}
+            >
+              <Card.Body style={{ display: "flex", flexDirection: "column" }}>
+                {link.logo !== undefined ? (
+                  <Card.Img variant="top" src={link.logo} />
+                ) : (
+                  <Card.Title>{link.name}</Card.Title>
+                )}
+                <Card.Text className="p-3 mb-0">{link.description}</Card.Text>
+                <Nav.Link
+                  href={link.url}
+                  target={"_blank"}
+                  style={{ marginTop: "auto" }}
+                >
+                  Ir a {link.name}
+                </Nav.Link>
+              </Card.Body>
+            </Card>
+          );
+        })}
+      </Container>
+    </>
   );
 };
 
