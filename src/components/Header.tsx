@@ -2,7 +2,7 @@ import { Auth } from "aws-amplify";
 import { SetStateAction, useEffect, useInsertionEffect, useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
-import logo from "./../logo.svg";
+import logo from "./../logos/logoEscudoAgaete.png";
 import style from "../styles/Header.module.css";
 
 export const Header = () => {
@@ -41,6 +41,7 @@ export const Header = () => {
             height="30"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
+            style={{ paddingRight: "5px" }}
           />
           Portal del Empleado
         </Navbar.Brand>

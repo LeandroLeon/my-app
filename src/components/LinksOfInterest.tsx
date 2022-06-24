@@ -3,7 +3,7 @@ import { Container, Card, Nav } from "react-bootstrap";
 import logoGestiona from "../logos/logo_espublico_gestiona.png";
 import logoNominalia from "../logos/logo_nominalia.png";
 import logoPortalHorario from "../logos/logo_portal_horario.png";
-import logoAgaete from "../logos/logo_agaete.png";
+import logoAgaete from "../logos/logo_aytoagaete_textonegro.jpg";
 
 type LinksOfInterestData = {
   name: string;
