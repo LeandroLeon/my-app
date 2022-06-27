@@ -134,6 +134,12 @@ export const NewEventModal = (props: NewEventModalProps) => {
                 style={{ width: "50%" }}
                 onChange={handleChange}
               />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlStartTime"
+            >
+              <Form.Label>Desde</Form.Label>
               <Form.Control
                 type="time"
                 name="startTime"
@@ -143,6 +149,9 @@ export const NewEventModal = (props: NewEventModalProps) => {
                 step={3600}
                 onChange={handleChange}
               />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlEndTime">
+              <Form.Label>Hasta</Form.Label>
               <Form.Control
                 type="time"
                 name="endTime"
