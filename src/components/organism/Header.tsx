@@ -1,13 +1,11 @@
 import { Auth } from "aws-amplify";
-import { SetStateAction, useEffect, useInsertionEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
-import logo from "./../logos/logoEscudoAgaete.png";
-import style from "../styles/Header.module.css";
+import { NavLink } from "react-router-dom";
+import logo from "../../logos/logoEscudoAgaete.png";
+import style from "../../styles/Header.module.css";
 
 export const Header = () => {
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({
     username: "",
     email: "",
