@@ -44,3 +44,42 @@ export const onDeleteEvent = /* GraphQL */ `
     }
   }
 `;
+export const onCreateCircular = /* GraphQL */ `
+  subscription OnCreateCircular {
+    onCreateCircular {
+      id
+      type
+      title
+      description
+      attachments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCircular = /* GraphQL */ `
+  subscription OnUpdateCircular {
+    onUpdateCircular {
+      id
+      type
+      title
+      description
+      attachments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCircular = /* GraphQL */ `
+  subscription OnDeleteCircular {
+    onDeleteCircular {
+      id
+      type
+      title
+      description
+      attachments
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -53,3 +53,51 @@ export const deleteEvent = /* GraphQL */ `
     }
   }
 `;
+export const createCircular = /* GraphQL */ `
+  mutation CreateCircular(
+    $input: CreateCircularInput!
+    $condition: ModelCircularConditionInput
+  ) {
+    createCircular(input: $input, condition: $condition) {
+      id
+      type
+      title
+      description
+      attachments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCircular = /* GraphQL */ `
+  mutation UpdateCircular(
+    $input: UpdateCircularInput!
+    $condition: ModelCircularConditionInput
+  ) {
+    updateCircular(input: $input, condition: $condition) {
+      id
+      type
+      title
+      description
+      attachments
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCircular = /* GraphQL */ `
+  mutation DeleteCircular(
+    $input: DeleteCircularInput!
+    $condition: ModelCircularConditionInput
+  ) {
+    deleteCircular(input: $input, condition: $condition) {
+      id
+      type
+      title
+      description
+      attachments
+      createdAt
+      updatedAt
+    }
+  }
+`;

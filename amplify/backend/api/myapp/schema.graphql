@@ -9,3 +9,21 @@ type Event
   startDate: String!
   endDate: String!
 }
+
+type Circular
+  @model
+  @auth(
+    rules: [{ allow: public, operations: [create, read, update, delete] }]
+  ) {
+  id: ID!
+  type: String!
+    @index(
+      name: "circularsByDate"
+      queryField: "circularsByDate"
+      sortKeyFields: ["createdAt"]
+    )
+  title: String!
+  description: String!
+  attachments: [String]
+  createdAt: String
+}
