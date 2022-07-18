@@ -31,7 +31,8 @@
     },
     "categories": {
       "auth": {
-        "myapp7a68b9f7": {}
+        "myapp7a68b9f7": {},
+        "userPoolGroups": {}
       }
     }
   }
