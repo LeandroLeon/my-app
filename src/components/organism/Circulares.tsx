@@ -5,7 +5,6 @@ import { Accordion, Button, Container } from "react-bootstrap";
 import { NewCircularModal } from "../moleculs/NewCircularModal";
 import { useAuthContext } from "../../contexts/useAuthContext";
 import {
-  ListCircularsQuery,
   deleteCircular,
   DeleteCircularMutation,
   circularsByDate,
@@ -79,7 +78,7 @@ export const Circulares = () => {
 
   useEffect(() => {
     fetchCirculars();
-  }, []);
+  });
 
   const buttonOnClick = (
     event: React.MouseEvent<HTMLButtonElement>,

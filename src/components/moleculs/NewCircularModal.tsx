@@ -1,11 +1,7 @@
 import { API } from "aws-amplify";
 import { ChangeEvent, SetStateAction, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
-import {
-  Circular,
-  CreateCircularMutation,
-  ListCircularsQuery,
-} from "../../API";
+import { Circular, CreateCircularMutation } from "../../API";
 import { createCircular } from "../../graphql";
 
 interface ModalNewCircularProps {
