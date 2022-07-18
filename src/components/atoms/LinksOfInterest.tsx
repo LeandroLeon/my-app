@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
 import { Container, Card, Nav } from "react-bootstrap";
-import logoGestiona from "../logos/logo_espublico_gestiona.png";
-import logoNominalia from "../logos/logo_nominalia.png";
-import logoPortalHorario from "../logos/logo_portal_horario.png";
-import logoAgaete from "../logos/logo_aytoagaete_textonegro.jpg";
+import logoGestiona from "../../logos/logo_espublico_gestiona.png";
+import logoNominalia from "../../logos/logo_nominalia.png";
+import logoPortalHorario from "../../logos/logo_portal_horario.png";
+import logoAgaete from "../../logos/logo_aytoagaete_textonegro.jpg";
 
 type LinksOfInterestData = {
   name: string;
@@ -45,9 +44,10 @@ export const LinksOfInterest = () => {
   return (
     <>
       <Container style={style.MainContainer}>
-        {LINKS_OF_INTEREST.map((link) => {
+        {LINKS_OF_INTEREST.map((link, index) => {
           return (
             <Card
+              key={index}
               bg={"Light".toLowerCase()}
               style={{
                 width: "18rem",

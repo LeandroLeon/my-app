@@ -1,8 +1,8 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { CreateEventMutation, ListEventsQuery } from "../API";
+import { CreateEventMutation, ListEventsQuery } from "../../API";
 import { API, Auth } from "aws-amplify";
-import { createEvent } from "../graphql";
+import { createEvent } from "../../graphql";
 
 interface NewEventModalProps {
   events: ListEventsQuery | undefined;

@@ -84,6 +84,50 @@ export type DeleteEventInput = {
   id: string,
 };
 
+export type CreateCircularInput = {
+  id?: string | null,
+  type: string,
+  title: string,
+  description: string,
+  attachments?: Array< string | null > | null,
+  createdAt?: string | null,
+};
+
+export type ModelCircularConditionInput = {
+  type?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  attachments?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelCircularConditionInput | null > | null,
+  or?: Array< ModelCircularConditionInput | null > | null,
+  not?: ModelCircularConditionInput | null,
+};
+
+export type Circular = {
+  __typename: "Circular",
+  id: string,
+  type: string,
+  title: string,
+  description: string,
+  attachments?: Array< string | null > | null,
+  createdAt?: string | null,
+  updatedAt: string,
+};
+
+export type UpdateCircularInput = {
+  id: string,
+  type?: string | null,
+  title?: string | null,
+  description?: string | null,
+  attachments?: Array< string | null > | null,
+  createdAt?: string | null,
+};
+
+export type DeleteCircularInput = {
+  id: string,
+};
+
 export type ModelEventFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -116,6 +160,40 @@ export type ModelEventConnection = {
   items:  Array<Event | null >,
   nextToken?: string | null,
 };
+
+export type ModelCircularFilterInput = {
+  id?: ModelIDInput | null,
+  type?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  attachments?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelCircularFilterInput | null > | null,
+  or?: Array< ModelCircularFilterInput | null > | null,
+  not?: ModelCircularFilterInput | null,
+};
+
+export type ModelCircularConnection = {
+  __typename: "ModelCircularConnection",
+  items:  Array<Circular | null >,
+  nextToken?: string | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type CreateEventMutationVariables = {
   input: CreateEventInput,
@@ -174,6 +252,60 @@ export type DeleteEventMutation = {
   } | null,
 };
 
+export type CreateCircularMutationVariables = {
+  input: CreateCircularInput,
+  condition?: ModelCircularConditionInput | null,
+};
+
+export type CreateCircularMutation = {
+  createCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCircularMutationVariables = {
+  input: UpdateCircularInput,
+  condition?: ModelCircularConditionInput | null,
+};
+
+export type UpdateCircularMutation = {
+  updateCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCircularMutationVariables = {
+  input: DeleteCircularInput,
+  condition?: ModelCircularConditionInput | null,
+};
+
+export type DeleteCircularMutation = {
+  deleteCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetEventQueryVariables = {
   id: string,
 };
@@ -211,6 +343,72 @@ export type ListEventsQuery = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetCircularQueryVariables = {
+  id: string,
+};
+
+export type GetCircularQuery = {
+  getCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCircularsQueryVariables = {
+  filter?: ModelCircularFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCircularsQuery = {
+  listCirculars?:  {
+    __typename: "ModelCircularConnection",
+    items:  Array< {
+      __typename: "Circular",
+      id: string,
+      type: string,
+      title: string,
+      description: string,
+      attachments?: Array< string | null > | null,
+      createdAt?: string | null,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type CircularsByDateQueryVariables = {
+  type: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCircularFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CircularsByDateQuery = {
+  circularsByDate?:  {
+    __typename: "ModelCircularConnection",
+    items:  Array< {
+      __typename: "Circular",
+      id: string,
+      type: string,
+      title: string,
+      description: string,
+      attachments?: Array< string | null > | null,
+      createdAt?: string | null,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -267,5 +465,44 @@ export type OnDeleteEventSubscription = {
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
+  } | null,
+};
+
+export type OnCreateCircularSubscription = {
+  onCreateCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCircularSubscription = {
+  onUpdateCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCircularSubscription = {
+  onDeleteCircular?:  {
+    __typename: "Circular",
+    id: string,
+    type: string,
+    title: string,
+    description: string,
+    attachments?: Array< string | null > | null,
+    createdAt?: string | null,
+    updatedAt: string,
   } | null,
 };

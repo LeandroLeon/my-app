@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { LinksOfInterest } from "../components/LinksOfInterest";
+import { Container } from "react-bootstrap";
+import { Circulares } from "../components/organism/Circulares";
+import { LinksOfInterest } from "../components/atoms/LinksOfInterest";
 
 export const Home = () => {
   const [user, setUser] = useState({
@@ -17,12 +19,13 @@ export const Home = () => {
   }, []);
 
   return (
-    <>
+    <Container>
       <h1 style={{ textAlign: "center", paddingTop: "2rem" }}>
         Bienvenido a tu portal {user.username} !
       </h1>
       <LinksOfInterest />
-    </>
+      <Circulares />
+    </Container>
   );
 };
 

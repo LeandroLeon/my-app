@@ -17,12 +17,12 @@ import es from "date-fns/locale/es";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Container } from "react-bootstrap";
-import { NewEventModal } from "./NewEventModal";
-import { DeleteEventInput, listEvents, ListEventsQuery } from "../graphql";
-import * as MUTATIONS from "../graphql/mutations";
+import { NewEventModal } from "../atoms/NewEventModal";
+import { DeleteEventInput, listEvents, ListEventsQuery } from "../../graphql";
+import * as MUTATIONS from "../../graphql/mutations";
 import GraphQLAPI, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql";
 import { API } from "aws-amplify";
-import { IdentifiedEvent } from "../types/IdentifiedEvent";
+import { IdentifiedEvent } from "../../types/IdentifiedEvent";
 
 type DragAndDropEventData = {
   event: Event;
