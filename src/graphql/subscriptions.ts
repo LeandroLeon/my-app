@@ -83,3 +83,42 @@ export const onDeleteCircular = /* GraphQL */ `
     }
   }
 `;
+export const onCreateEmployee = /* GraphQL */ `
+  subscription OnCreateEmployee {
+    onCreateEmployee {
+      id
+      fullName
+      extension
+      department
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateEmployee = /* GraphQL */ `
+  subscription OnUpdateEmployee {
+    onUpdateEmployee {
+      id
+      fullName
+      extension
+      department
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteEmployee = /* GraphQL */ `
+  subscription OnDeleteEmployee {
+    onDeleteEmployee {
+      id
+      fullName
+      extension
+      department
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
