@@ -100,3 +100,66 @@ export const circularsByDate = /* GraphQL */ `
     }
   }
 `;
+export const getEmployee = /* GraphQL */ `
+  query GetEmployee($id: ID!) {
+    getEmployee(id: $id) {
+      id
+      fullName
+      extension
+      department
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listEmployees = /* GraphQL */ `
+  query ListEmployees(
+    $filter: ModelEmployeeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEmployees(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        fullName
+        extension
+        department
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const employeesSortedByExtension = /* GraphQL */ `
+  query EmployeesSortedByExtension(
+    $type: String!
+    $extension: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelEmployeeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    employeesSortedByExtension(
+      type: $type
+      extension: $extension
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        fullName
+        extension
+        department
+        type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

@@ -63,6 +63,14 @@ export const Header = () => {
               >
                 Reservas
               </NavLink>
+              <NavLink
+                className={(navData: any) =>
+                  navData.isActive ? `${style.ActiveLink}` : `${style.Link}`
+                }
+                to="/empleados"
+              >
+                Empleados
+              </NavLink>
             </Nav.Item>
           </Nav>
           <Nav className={"ms-auto"}>

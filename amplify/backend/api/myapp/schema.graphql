@@ -27,3 +27,21 @@ type Circular
   attachments: [String]
   createdAt: String
 }
+
+type Employee
+  @model
+  @auth(
+    rules: [{ allow: public, operations: [create, read, update, delete] }]
+  ) {
+  id: ID!
+  fullName: String!
+  extension: String @default(value: "9999")
+  department: String
+  type: String!
+    @default(value: "Employee")
+    @index(
+      name: "employeesSortedByExtension"
+      queryField: "employeesSortedByExtension"
+      sortKeyFields: ["extension"]
+    )
+}

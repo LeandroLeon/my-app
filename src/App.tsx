@@ -6,6 +6,7 @@ import { Home } from "./pages/Home";
 import { Reservas } from "./pages/Reservas";
 import { useEffect } from "react";
 import { Auth } from "aws-amplify";
+import { Empleados } from "./pages/Empleados";
 
 const App = () => {
   useEffect(() => {
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/reservas" element={<Reservas />} />
+        <Route path="/empleados" element={<Empleados />} />
       </Routes>
     </Router>
   );

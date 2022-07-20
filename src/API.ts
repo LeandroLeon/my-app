@@ -128,6 +128,47 @@ export type DeleteCircularInput = {
   id: string,
 };
 
+export type CreateEmployeeInput = {
+  id?: string | null,
+  fullName: string,
+  extension?: string | null,
+  department?: string | null,
+  type: string,
+};
+
+export type ModelEmployeeConditionInput = {
+  fullName?: ModelStringInput | null,
+  extension?: ModelStringInput | null,
+  department?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  and?: Array< ModelEmployeeConditionInput | null > | null,
+  or?: Array< ModelEmployeeConditionInput | null > | null,
+  not?: ModelEmployeeConditionInput | null,
+};
+
+export type Employee = {
+  __typename: "Employee",
+  id: string,
+  fullName: string,
+  extension?: string | null,
+  department?: string | null,
+  type: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateEmployeeInput = {
+  id: string,
+  fullName?: string | null,
+  extension?: string | null,
+  department?: string | null,
+  type?: string | null,
+};
+
+export type DeleteEmployeeInput = {
+  id: string,
+};
+
 export type ModelEventFilterInput = {
   id?: ModelIDInput | null,
   title?: ModelStringInput | null,
@@ -194,6 +235,23 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelEmployeeFilterInput = {
+  id?: ModelIDInput | null,
+  fullName?: ModelStringInput | null,
+  extension?: ModelStringInput | null,
+  department?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  and?: Array< ModelEmployeeFilterInput | null > | null,
+  or?: Array< ModelEmployeeFilterInput | null > | null,
+  not?: ModelEmployeeFilterInput | null,
+};
+
+export type ModelEmployeeConnection = {
+  __typename: "ModelEmployeeConnection",
+  items:  Array<Employee | null >,
+  nextToken?: string | null,
+};
 
 export type CreateEventMutationVariables = {
   input: CreateEventInput,
@@ -306,6 +364,60 @@ export type DeleteCircularMutation = {
   } | null,
 };
 
+export type CreateEmployeeMutationVariables = {
+  input: CreateEmployeeInput,
+  condition?: ModelEmployeeConditionInput | null,
+};
+
+export type CreateEmployeeMutation = {
+  createEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateEmployeeMutationVariables = {
+  input: UpdateEmployeeInput,
+  condition?: ModelEmployeeConditionInput | null,
+};
+
+export type UpdateEmployeeMutation = {
+  updateEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteEmployeeMutationVariables = {
+  input: DeleteEmployeeInput,
+  condition?: ModelEmployeeConditionInput | null,
+};
+
+export type DeleteEmployeeMutation = {
+  deleteEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetEventQueryVariables = {
   id: string,
 };
@@ -414,6 +526,72 @@ export type CircularsByDateQuery = {
   } | null,
 };
 
+export type GetEmployeeQueryVariables = {
+  id: string,
+};
+
+export type GetEmployeeQuery = {
+  getEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListEmployeesQueryVariables = {
+  filter?: ModelEmployeeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListEmployeesQuery = {
+  listEmployees?:  {
+    __typename: "ModelEmployeeConnection",
+    items:  Array< {
+      __typename: "Employee",
+      id: string,
+      fullName: string,
+      extension?: string | null,
+      department?: string | null,
+      type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type EmployeesSortedByExtensionQueryVariables = {
+  type: string,
+  extension?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelEmployeeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type EmployeesSortedByExtensionQuery = {
+  employeesSortedByExtension?:  {
+    __typename: "ModelEmployeeConnection",
+    items:  Array< {
+      __typename: "Employee",
+      id: string,
+      fullName: string,
+      extension?: string | null,
+      department?: string | null,
+      type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateEventSubscriptionVariables = {
   owner?: string | null,
 };
@@ -503,6 +681,45 @@ export type OnDeleteCircularSubscription = {
     description: string,
     attachments?: Array< string | null > | null,
     createdAt?: string | null,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateEmployeeSubscription = {
+  onCreateEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateEmployeeSubscription = {
+  onUpdateEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteEmployeeSubscription = {
+  onDeleteEmployee?:  {
+    __typename: "Employee",
+    id: string,
+    fullName: string,
+    extension?: string | null,
+    department?: string | null,
+    type: string,
+    createdAt: string,
     updatedAt: string,
   } | null,
 };
