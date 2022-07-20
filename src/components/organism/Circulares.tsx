@@ -1,5 +1,4 @@
 import GraphQLAPI, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql";
-import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Accordion, Button, Container } from "react-bootstrap";
 import { NewCircularModal } from "../moleculs/NewCircularModal";
@@ -14,8 +13,7 @@ import {
 
 export const Circulares = () => {
   const [circulars, setCirculars] = useState<Circular[] | undefined>(undefined);
-  const user = useAuthContext();
-  const rawToken = user?.getSignInUserSession()?.getAccessToken().getJwtToken();
+  const { isAdmin } = useAuthContext();
 
   const fetchCirculars = async () => {
     try {
@@ -67,18 +65,9 @@ export const Circulares = () => {
     deleteCircularFromHook(id);
   };
 
-  const isAdminUser = () => {
-    if (rawToken === undefined) return false;
-    const decodedToken = jwtDecode<any>(rawToken); // NOTE: We use <any> because we dont have a proper type for AWS JWT Token
-    return (
-      (decodedToken.hasOwnProperty("cognito:groups") as boolean) &&
-      (decodedToken["cognito:groups"].includes("admin") as boolean)
-    );
-  };
-
   useEffect(() => {
     fetchCirculars();
-  });
+  }, [JSON.stringify(circulars)]);
 
   const buttonOnClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -100,7 +89,7 @@ export const Circulares = () => {
     <>
       <Container style={style.Header}>
         <h2>Circulares</h2>
-        {isAdminUser() && (
+        {isAdmin && (
           <NewCircularModal
             buttonText="Crear Circular"
             circulars={circulars}
@@ -118,7 +107,7 @@ export const Circulares = () => {
               </Accordion.Header>
               <Accordion.Body style={style.AccordionBody}>
                 <div>{item?.description}</div>
-                {isAdminUser() && (
+                {isAdmin && (
                   <Button
                     variant="danger"
                     style={style.DeleteButton}
