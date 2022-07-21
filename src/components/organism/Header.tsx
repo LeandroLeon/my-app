@@ -78,7 +78,9 @@ export const Header = () => {
               {user.username !== "" ? (
                 <>
                   <Navbar.Text>Hola! {user.username} </Navbar.Text>
-                  <Button onClick={signOut}>Cerrar Sesión</Button>
+                  <Button variant={"secondary"} onClick={signOut}>
+                    Cerrar Sesión
+                  </Button>
                 </>
               ) : (
                 <></>
