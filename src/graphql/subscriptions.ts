@@ -10,6 +10,7 @@ export const onCreateEvent = /* GraphQL */ `
       description
       startDate
       endDate
+      location
       createdAt
       updatedAt
       owner
@@ -24,6 +25,7 @@ export const onUpdateEvent = /* GraphQL */ `
       description
       startDate
       endDate
+      location
       createdAt
       updatedAt
       owner
@@ -38,6 +40,7 @@ export const onDeleteEvent = /* GraphQL */ `
       description
       startDate
       endDate
+      location
       createdAt
       updatedAt
       owner

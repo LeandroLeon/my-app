@@ -10,6 +10,7 @@ export const getEvent = /* GraphQL */ `
       description
       startDate
       endDate
+      location
       createdAt
       updatedAt
       owner
@@ -29,6 +30,7 @@ export const listEvents = /* GraphQL */ `
         description
         startDate
         endDate
+        location
         createdAt
         updatedAt
         owner

@@ -1,12 +1,14 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { CreateEventMutation, ListEventsQuery } from "../../API";
+import { CreateEventMutation, ListEventsQuery, LocationType } from "../../API";
 import { API, Auth } from "aws-amplify";
 import { createEvent } from "../../graphql";
 
 interface NewEventModalProps {
+  buttonText: String;
   events: ListEventsQuery | undefined;
   setEvents: React.Dispatch<SetStateAction<ListEventsQuery | undefined>>;
+  location: LocationType;
 }
 
 export const NewEventModal = (props: NewEventModalProps) => {
@@ -61,7 +63,6 @@ export const NewEventModal = (props: NewEventModalProps) => {
   const handleSave = async () => {
     if (!areValidInputs()) return;
     const eventDetails = getInputs();
-
     const createEventMutationData = (await API.graphql({
       query: createEvent,
       variables: { input: eventDetails },
@@ -100,13 +101,14 @@ export const NewEventModal = (props: NewEventModalProps) => {
       title: `Reservado por: ${inputs.email}`,
       startDate: new Date(inputs.eventDate + "T" + inputs.startTime),
       endDate: new Date(inputs.eventDate + "T" + inputs.endTime),
+      location: props.location,
     };
   };
 
   return (
     <>
-      <Button className={"mt-2"} variant="primary" onClick={handleShow}>
-        Reservar
+      <Button variant="success" onClick={handleShow}>
+        {props.buttonText}
       </Button>
 
       <Modal show={show} onHide={handleHide}>

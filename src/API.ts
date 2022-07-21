@@ -8,13 +8,25 @@ export type CreateEventInput = {
   description?: string | null,
   startDate: string,
   endDate: string,
+  location: LocationType,
 };
+
+export enum LocationType {
+  SALA_DE_JUNTAS = "SALA_DE_JUNTAS",
+  SALON_DE_ACTOS = "SALON_DE_ACTOS",
+  AULA_DE_INFORMATICA = "AULA_DE_INFORMATICA",
+  AULA_DE_TEORIA_1 = "AULA_DE_TEORIA_1",
+  AULA_DE_TEORIA_2 = "AULA_DE_TEORIA_2",
+  AULA_DE_TEORIA_3 = "AULA_DE_TEORIA_3",
+}
+
 
 export type ModelEventConditionInput = {
   title?: ModelStringInput | null,
   description?: ModelStringInput | null,
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
+  location?: ModelLocationTypeInput | null,
   and?: Array< ModelEventConditionInput | null > | null,
   or?: Array< ModelEventConditionInput | null > | null,
   not?: ModelEventConditionInput | null,
@@ -60,6 +72,11 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelLocationTypeInput = {
+  eq?: LocationType | null,
+  ne?: LocationType | null,
+};
+
 export type Event = {
   __typename: "Event",
   id: string,
@@ -67,6 +84,7 @@ export type Event = {
   description?: string | null,
   startDate: string,
   endDate: string,
+  location: LocationType,
   createdAt: string,
   updatedAt: string,
   owner?: string | null,
@@ -78,6 +96,7 @@ export type UpdateEventInput = {
   description?: string | null,
   startDate?: string | null,
   endDate?: string | null,
+  location?: LocationType | null,
 };
 
 export type DeleteEventInput = {
@@ -175,6 +194,7 @@ export type ModelEventFilterInput = {
   description?: ModelStringInput | null,
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
+  location?: ModelLocationTypeInput | null,
   and?: Array< ModelEventFilterInput | null > | null,
   or?: Array< ModelEventFilterInput | null > | null,
   not?: ModelEventFilterInput | null,
@@ -266,6 +286,7 @@ export type CreateEventMutation = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -285,6 +306,7 @@ export type UpdateEventMutation = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -304,6 +326,7 @@ export type DeleteEventMutation = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -430,6 +453,7 @@ export type GetEventQuery = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -452,6 +476,7 @@ export type ListEventsQuery = {
       description?: string | null,
       startDate: string,
       endDate: string,
+      location: LocationType,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
@@ -604,6 +629,7 @@ export type OnCreateEventSubscription = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -622,6 +648,7 @@ export type OnUpdateEventSubscription = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -640,6 +667,7 @@ export type OnDeleteEventSubscription = {
     description?: string | null,
     startDate: string,
     endDate: string,
+    location: LocationType,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,

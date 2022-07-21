@@ -1,5 +1,15 @@
 # This "input" configures a global authorization rule to enable public access to
 # all models in this schema. Learn more about authorization rules here: https://docs.amplify.aws/cli/graphql/authorization-rules
+
+enum LocationType {
+  SALA_DE_JUNTAS
+  SALON_DE_ACTOS
+  AULA_DE_INFORMATICA
+  AULA_DE_TEORIA_1
+  AULA_DE_TEORIA_2
+  AULA_DE_TEORIA_3
+}
+
 type Event
   @model
   @auth(rules: [{ allow: public, operations: [read] }, { allow: owner }]) {
@@ -8,6 +18,7 @@ type Event
   description: String
   startDate: String!
   endDate: String!
+  location: LocationType!
 }
 
 type Circular

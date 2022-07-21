@@ -16,9 +16,14 @@ import getDay from "date-fns/getDay";
 import es from "date-fns/locale/es";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Container } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import { NewEventModal } from "../atoms/NewEventModal";
-import { DeleteEventInput, listEvents, ListEventsQuery } from "../../graphql";
+import {
+  DeleteEventInput,
+  listEvents,
+  ListEventsQuery,
+  LocationType,
+} from "../../graphql";
 import * as MUTATIONS from "../../graphql/mutations";
 import GraphQLAPI, { GRAPHQL_AUTH_MODE } from "@aws-amplify/api-graphql";
 import { API } from "aws-amplify";
@@ -54,6 +59,12 @@ const adaptEventsFromAPI = (data: ListEventsQuery) => {
 
 export const CustomCalendar = (props: CustomCalendarProps) => {
   const [events, setEvents] = useState<ListEventsQuery | undefined>(undefined);
+  const [location, setLocation] = useState<LocationType>(
+    LocationType.SALA_DE_JUNTAS
+  );
+  const LOCATIONS = Object.keys(LocationType).filter((item) => {
+    return isNaN(Number(item));
+  });
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -61,6 +72,13 @@ export const CustomCalendar = (props: CustomCalendarProps) => {
         const response = (await GraphQLAPI.graphql({
           query: listEvents,
           authMode: GRAPHQL_AUTH_MODE.API_KEY,
+          variables: {
+            filter: {
+              location: {
+                eq: location,
+              },
+            },
+          },
         })) as { data: ListEventsQuery };
         setEvents(response.data);
       } catch (error) {
@@ -68,7 +86,7 @@ export const CustomCalendar = (props: CustomCalendarProps) => {
       }
     };
     fetchEvents();
-  }, []);
+  }, [location]);
 
   const updateEventFromAPI = async (eventDetails: IdentifiedEvent) =>
     await API.graphql({
@@ -89,6 +107,7 @@ export const CustomCalendar = (props: CustomCalendarProps) => {
       id: identifiedEvent.id,
       startDate: data.start,
       endDate: data.end,
+      location: location,
     };
     try {
       (await updateEventFromAPI(eventDetails)) as {
@@ -156,13 +175,37 @@ export const CustomCalendar = (props: CustomCalendarProps) => {
 
   return (
     <Container className={"mt-3"}>
-      <h2>{props.title}</h2>
+      <div style={style.HeadingContainer}>
+        <h2>{props.title}</h2>
+
+        <Form.Select
+          aria-label="Select location"
+          style={style.DropdownSelect}
+          defaultValue={LocationType.SALA_DE_JUNTAS}
+          onChange={(event) => setLocation(event.target.value as LocationType)}
+        >
+          {LOCATIONS.map((location) => (
+            <option value={location} key={location}>
+              {location.replaceAll("_", " ")}
+            </option>
+          ))}
+        </Form.Select>
+        <div style={style.NewEventButtonWrapper}>
+          <NewEventModal
+            buttonText={"Nueva Reserva"}
+            events={events}
+            setEvents={setEvents}
+            location={location}
+          />
+        </div>
+      </div>
+
       <DnDCalendar
         defaultView="week"
         events={adaptEventsFromAPI(events as ListEventsQuery)}
         localizer={localizer}
         culture={"es"}
-        messages={messages}
+        messages={MESSAGES}
         onEventDrop={onEventDrop}
         onSelectSlot={onSelectSlot}
         onSelectEvent={onSelectEvent}
@@ -174,7 +217,6 @@ export const CustomCalendar = (props: CustomCalendarProps) => {
         resizable
         selectable
       />
-      <NewEventModal events={events} setEvents={setEvents} />
     </Container>
   );
 };
@@ -191,7 +233,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const messages = {
+const MESSAGES = {
   date: "Fecha",
   time: "Hora",
   event: "Evento",
@@ -209,5 +251,22 @@ const messages = {
   noEventsInRange: "No hay eventos en este rango.",
   showMore: function showMore(total: number) {
     return "+" + total + " Mas";
+  },
+};
+
+const style = {
+  DropdownSelect: {
+    width: "max-content",
+    marginLeft: "1%",
+  },
+  HeadingContainer: {
+    display: "flex",
+    flexDirection: "row" as "row",
+    marginBottom: "1%",
+  },
+  NewEventButtonWrapper: {
+    marginLeft: "auto",
+    display: "flex",
+    alignItems: "center",
   },
 };

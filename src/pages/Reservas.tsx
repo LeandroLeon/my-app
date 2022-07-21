@@ -1,5 +1,5 @@
 import { CustomCalendar } from "../components/organism/Calendar";
 
 export const Reservas = () => {
-  return <CustomCalendar title={"Reservas de la Sala de Juntas"} />;
+  return <CustomCalendar title={"Reservas de "} />;
 };
